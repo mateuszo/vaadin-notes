@@ -7,15 +7,13 @@ public class LoginComponent extends com.vaadin.ui.FormLayout {
     private Label label = new Label("Please log in");
     private TextField login = new TextField("Login");
     private PasswordField passwd = new PasswordField("Password");
-    private Button logInbtn = new Button("Log in");
-    private Button logOutBtn = new Button("Log out");
+    private Button logInbtn = new Button("Log in", this::login);
+    private Button logOutBtn = new Button("Log out", this::logout);
     private MyUI myUI;
 
     public LoginComponent(MyUI myUI){
         this.myUI = myUI;
         setSizeUndefined();
-        logInbtn.addClickListener(e -> { this.login(); });
-        logOutBtn.addClickListener(e -> { this.logout(); });
 
         addComponents(this.label);
 
@@ -28,7 +26,7 @@ public class LoginComponent extends com.vaadin.ui.FormLayout {
         }
     }
 
-    private void login(){
+    private void login(Button.ClickEvent event){
         User user = new User(this.login.getValue(), this.passwd.getValue());
         if(user.login()){
             this.myUI.getSession().setAttribute("User", user);
@@ -42,7 +40,7 @@ public class LoginComponent extends com.vaadin.ui.FormLayout {
         }
     }
 
-    private void logout(){
+    private void logout(Button.ClickEvent event){
         this.myUI.getSession().setAttribute("User", null);
         label.setValue("Please log in");
         removeComponent(this.logOutBtn);
