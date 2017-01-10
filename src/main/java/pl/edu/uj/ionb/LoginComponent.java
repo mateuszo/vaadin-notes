@@ -1,50 +1,43 @@
 package pl.edu.uj.ionb;
 
 
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.*;
 
-public class LoginComponent extends com.vaadin.ui.FormLayout {
+import java.util.function.Consumer;
+
+public class LoginComponent extends com.vaadin.ui.FormLayout implements View {
     private Label label = new Label("Please log in");
     private TextField login = new TextField("Login");
     private PasswordField passwd = new PasswordField("Password");
     private Button logInbtn = new Button("Log in", this::login);
-    private Button logOutBtn = new Button("Log out", this::logout);
     private MyUI myUI;
+    private Consumer<User> callback;
 
-    public LoginComponent(MyUI myUI){
+    public LoginComponent(MyUI myUI, Consumer<User> loginCallback){
         this.myUI = myUI;
+        this.callback = loginCallback;
         setSizeUndefined();
+        addComponents(this.label, this.login, this.passwd, this.logInbtn);
 
-        addComponents(this.label);
-
-        User user = (User) this.myUI.getSession().getAttribute("User");
-        if(user == null){
-            addComponents(this.login, this.passwd, this.logInbtn);
-        } else{
-            this.label.setValue("Logged in as: " + user.getLogin());
-            addComponent(this.logOutBtn);
-        }
     }
 
     private void login(Button.ClickEvent event){
         User user = new User(this.login.getValue(), this.passwd.getValue());
         if(user.login()){
             this.myUI.getSession().setAttribute("User", user);
-            this.label.setValue("Logged in as: " + user.getLogin());
-            removeComponent(this.login);
-            removeComponent(this.passwd);
-            removeComponent(this.logInbtn);
-            addComponent(this.logOutBtn);
+            this.callback.accept(user);
         } else {
-            this.label.setValue("Unable to log in");
+            this.label.setValue("Invalid password or login");
+            this.label.setComponentError(new UserError("Invalid password or login"));
         }
     }
 
-    private void logout(Button.ClickEvent event){
-        this.myUI.getSession().setAttribute("User", null);
-        label.setValue("Please log in");
-        removeComponent(this.logOutBtn);
-        addComponents(this.login, this.passwd, this.logInbtn);
-    }
 
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+
+    }
 }

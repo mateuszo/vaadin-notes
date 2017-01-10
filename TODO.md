@@ -1,4 +1,4 @@
 - [x] Login component
 - [ ] DB connection
-- [ ] Refactor Login
+- [x] Refactor Login
 - [ ] Register form

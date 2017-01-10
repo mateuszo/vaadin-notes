@@ -4,10 +4,13 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -19,18 +22,36 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("mytheme")
 public class MyUI extends UI {
 
+    Navigator navigator;
+    Panel contentArea;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
 
-        LoginComponent lf = new LoginComponent(this);
-        layout.addComponents(lf);
+        contentArea = new Panel("Content");
 
-        layout.setMargin(true);
-        layout.setSpacing(true);
-        
-        setContent(layout);
+        layout.addComponent(contentArea);
+        navigator = new Navigator(UI.getCurrent(), contentArea);
+
+        WelcomeView lv = new WelcomeView(this, user -> navigator.navigateTo("LoginComponent"));
+        LoginComponent lc = new LoginComponent(this, user -> navigator.navigateTo("WelcomeView"));
+
+        navigator.addView("WelcomeView", lv);
+        navigator.addView("LoginComponent", lc);
+
+        setContent(contentArea);
+
+        User user = (User) this.getSession().getAttribute("User");
+        if(user == null){
+            navigator.navigateTo("LoginComponent");
+        } else {
+            navigator.navigateTo("WelcomeView");
+        }
     }
+
+
+
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
