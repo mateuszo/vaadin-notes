@@ -13,6 +13,7 @@ public class LoginComponent extends com.vaadin.ui.FormLayout implements View {
     private TextField login = new TextField("Login");
     private PasswordField passwd = new PasswordField("Password");
     private Button logInbtn = new Button("Log in", this::login);
+    private Button registerBtn = new Button("Register", this::register);
     private MyUI myUI;
     private Consumer<User> callback;
 
@@ -21,7 +22,7 @@ public class LoginComponent extends com.vaadin.ui.FormLayout implements View {
         this.myUI = myUI;
         this.callback = loginCallback;
         setSizeUndefined();
-        addComponents(this.label, this.login, this.passwd, this.logInbtn);
+        addComponents(this.label, this.login, this.passwd, this.logInbtn, this.registerBtn);
 
     }
 
@@ -34,6 +35,10 @@ public class LoginComponent extends com.vaadin.ui.FormLayout implements View {
             this.label.setValue("Invalid password or login");
             this.label.setComponentError(new UserError("Invalid password or login"));
         }
+    }
+
+    private void register(Button.ClickEvent event){
+        this.myUI.getCurrent().getNavigator().navigateTo("Register");
     }
 
 
