@@ -4,7 +4,9 @@ import javax.persistence.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mostafil on 08.01.2017.
@@ -31,6 +33,7 @@ public class MUser {
         }
     }
 
+
     public int getId() {
         return id;
     }
@@ -49,12 +52,12 @@ public class MUser {
         String hql = "FROM MUser U WHERE U.username = '" + this.username + "' and U.password = '" + this.password + "'";
         Query query = entityManager.createQuery(hql);
         List<MUser> users = query.getResultList();
-        System.out.println("Users size: " + users.size());
         entityManager.getTransaction().commit();
         entityManager.close();
         entityManagerFactory.close();
 
         if(users.size() == 1){
+            this.id = users.get(0).getId();
             return true;
         } else{
             return false;
@@ -65,7 +68,7 @@ public class MUser {
         System.out.println("Registering...");
 
         EntityManagerFactory entityManagerFactory
-                = Persistence.createEntityManagerFactory("pl.edu.uj.io.entity");
+                = Persistence.createEntityManagerFactory("pl.edu.uj.ionb");
         EntityManager entityManager
                 = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
@@ -78,11 +81,19 @@ public class MUser {
         System.out.println("Done");
     }
 
-    public static List<MUser> allUsers(){
-        List<MUser> users = new ArrayList<>();
-        users.add(new MUser("Jan","Kowalski"));
-        users.add(new MUser("Adam","Nowak"));
-        return users;
+
+    public void update(){
+        EntityManagerFactory entityManagerFactory
+                = Persistence.createEntityManagerFactory("pl.edu.uj.ionb");
+        EntityManager entityManager
+                = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        entityManager.merge(this);
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        entityManagerFactory.close();
     }
 
     public static String hashPasswd(String passwd) throws NoSuchAlgorithmException {
@@ -97,6 +108,24 @@ public class MUser {
         }
         return sb.toString();
     }
+
+//    public static List<Note> getAllNotes(){
+//        EntityManagerFactory entityManagerFactory
+//                = Persistence.createEntityManagerFactory("pl.edu.uj.ionb");
+//        EntityManager entityManager
+//                = entityManagerFactory.createEntityManager();
+//        entityManager.getTransaction().begin();
+//        String hql = "FROM Note N WHERE U.username = '" + this.username + "' and U.password = '" + this.password + "'";
+//        Query query = entityManager.createQuery(hql);
+//        List<MUser> users = query.getResultList();
+//        System.out.println("Users size: " + users.size());
+//        entityManager.getTransaction().commit();
+//        entityManager.close();
+//        entityManagerFactory.close();
+//    }
+
+
+
 
     @Override
     public boolean equals(Object o){

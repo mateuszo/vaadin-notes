@@ -6,15 +6,19 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="pl.edu.uj.ionb" transaction-type="RESOURCE_LOCAL" >
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>pl.edu.uj.ionb.MUser</class>
+        <class>pl.edu.uj.ionb.Note</class>
         <properties>
             <property name="hibernate.dialect"
-                      value="org.hibernate.dialect.DerbyTenSevenDialect"/>
+                      value="org.hibernate.dialect.MySQLDialect"/>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:derby:myderby"/>
+                      value="jdbc:mysql://localhost:3306/mynotes"/>
             <property name="javax.persistence.jdbc.driver"
-                      value="org.apache.derby.jdbc.EmbeddedDriver"/>
+                      value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="" />
             <property name="hibernate.hbm2ddl.auto"
                       value="update"/>
+            <property name="show_sql" value="true" />
         </properties>
     </persistence-unit>
 </persistence>

@@ -29,7 +29,7 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
 
-        contentArea = new Panel("Content");
+        contentArea = new Panel("MyNotes");
 
         layout.addComponent(contentArea);
         navigator = new Navigator(UI.getCurrent(), contentArea);

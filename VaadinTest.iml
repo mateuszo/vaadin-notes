@@ -23,6 +23,7 @@
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-client-compiled:7.7.6" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-themes:7.7.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.derby:derby:10.12.1.1" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:6.0.5" level="project" />
     <orderEntry type="library" name="Maven: javax:javaee-api:7.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.0" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
