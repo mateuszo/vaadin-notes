@@ -8,6 +8,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
+
 /**
  * Created by mostafil on 13.01.2017.
  */
@@ -17,9 +18,9 @@ public class RegisterComponent extends com.vaadin.ui.FormLayout implements View 
     private PasswordField passwd = new PasswordField("Password");
     private PasswordField passwdRepeat = new PasswordField("Repeat password");
     private Button registerBtn = new Button("Register", this::register);
+    private MyUI myUI;
 
-
-    public RegisterComponent() {
+    public RegisterComponent(MyUI myUI) {
         this.setMargin(true);
         setSizeUndefined();
         this.passwdRepeat.addValueChangeListener(e -> {
@@ -33,6 +34,13 @@ public class RegisterComponent extends com.vaadin.ui.FormLayout implements View 
     }
 
     private void register(Button.ClickEvent event){
+        if(this.passwd.getValue().equals(this.passwdRepeat.getValue())){
+            MUser user = new MUser(this.login.getValue(), this.passwd.getValue());
+            user.register();
+            removeAllComponents();
+            this.label.setValue("Registered!");
+            addComponent(this.label);
+        }
 
 
 

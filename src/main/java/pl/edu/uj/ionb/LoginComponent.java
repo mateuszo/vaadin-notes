@@ -15,9 +15,9 @@ public class LoginComponent extends com.vaadin.ui.FormLayout implements View {
     private Button logInbtn = new Button("Log in", this::login);
     private Button registerBtn = new Button("Register", this::register);
     private MyUI myUI;
-    private Consumer<User> callback;
+    private Consumer<MUser> callback;
 
-    public LoginComponent(MyUI myUI, Consumer<User> loginCallback){
+    public LoginComponent(MyUI myUI, Consumer<MUser> loginCallback){
         this.setMargin(true);
         this.myUI = myUI;
         this.callback = loginCallback;
@@ -27,9 +27,9 @@ public class LoginComponent extends com.vaadin.ui.FormLayout implements View {
     }
 
     private void login(Button.ClickEvent event){
-        User user = new User(this.login.getValue(), this.passwd.getValue());
+        MUser user = new MUser(this.login.getValue(), this.passwd.getValue());
         if(user.login()){
-            this.myUI.getSession().setAttribute("User", user);
+            this.myUI.getSession().setAttribute("MUser", user);
             this.callback.accept(user);
         } else {
             this.label.setValue("Invalid password or login");

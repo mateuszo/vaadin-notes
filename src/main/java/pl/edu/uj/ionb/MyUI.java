@@ -36,7 +36,7 @@ public class MyUI extends UI {
 
         WelcomeView lv = new WelcomeView(this, user -> navigator.navigateTo("LoginComponent"));
         LoginComponent lc = new LoginComponent(this, user -> navigator.navigateTo("WelcomeView"));
-        RegisterComponent rc = new RegisterComponent();
+        RegisterComponent rc = new RegisterComponent(this);
 
         navigator.addView("WelcomeView", lv);
         navigator.addView("LoginComponent", lc);
@@ -45,7 +45,7 @@ public class MyUI extends UI {
 
         setContent(contentArea);
 
-        User user = (User) this.getSession().getAttribute("User");
+        MUser user = (MUser) this.getSession().getAttribute("MUser");
         if(user == null){
             navigator.navigateTo("LoginComponent");
         } else {

@@ -33,14 +33,14 @@ public class WelcomeView extends VerticalLayout implements View {
     }
 
     private void logout(Button.ClickEvent event){
-        this.myUI.getSession().setAttribute("User", null);
+        this.myUI.getSession().setAttribute("MUser", null);
         this.logoutCallback.accept(null);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        User user = (User) myUI.getSession().getAttribute("User");
-        welcomeMsg.setValue("Welcome " + user.getLogin() + "!");
+        MUser user = (MUser) myUI.getSession().getAttribute("MUser");
+        welcomeMsg.setValue("Welcome " + user.getUsername() + "!");
 
     }
 }
