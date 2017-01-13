@@ -1,12 +1,17 @@
 package pl.edu.uj.ionb;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mostafil on 08.01.2017.
  */
+@Entity
+@Table
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String login;
     private String password;
