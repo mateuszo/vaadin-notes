@@ -20,6 +20,7 @@ public class WelcomeView extends VerticalLayout implements View {
     Consumer logoutCallback;
 
     public WelcomeView(MyUI myUI, Consumer logoutCallback) {
+        setMargin(true);
         setSizeFull();
         this.myUI = myUI;
         this.logoutCallback = logoutCallback;

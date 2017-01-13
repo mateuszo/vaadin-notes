@@ -17,6 +17,7 @@ public class LoginComponent extends com.vaadin.ui.FormLayout implements View {
     private Consumer<User> callback;
 
     public LoginComponent(MyUI myUI, Consumer<User> loginCallback){
+        this.setMargin(true);
         this.myUI = myUI;
         this.callback = loginCallback;
         setSizeUndefined();
