@@ -109,20 +109,22 @@ public class MUser {
         return sb.toString();
     }
 
-//    public static List<Note> getAllNotes(){
-//        EntityManagerFactory entityManagerFactory
-//                = Persistence.createEntityManagerFactory("pl.edu.uj.ionb");
-//        EntityManager entityManager
-//                = entityManagerFactory.createEntityManager();
-//        entityManager.getTransaction().begin();
-//        String hql = "FROM Note N WHERE U.username = '" + this.username + "' and U.password = '" + this.password + "'";
-//        Query query = entityManager.createQuery(hql);
-//        List<MUser> users = query.getResultList();
-//        System.out.println("Users size: " + users.size());
-//        entityManager.getTransaction().commit();
-//        entityManager.close();
-//        entityManagerFactory.close();
-//    }
+    public List<Note> getAllNotes(){
+        EntityManagerFactory entityManagerFactory
+                = Persistence.createEntityManagerFactory("pl.edu.uj.ionb");
+        EntityManager entityManager
+                = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        String hql = "FROM Note N WHERE N.user = " + this.id;
+        Query query = entityManager.createQuery(hql);
+        List<Note> notes = query.getResultList();
+        System.out.println("Notes size: " + notes.size());
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        entityManagerFactory.close();
+
+        return notes;
+    }
 
 
 

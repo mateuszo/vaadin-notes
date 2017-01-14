@@ -2,10 +2,7 @@ package pl.edu.uj.ionb;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import java.util.function.Consumer;
 
@@ -17,6 +14,7 @@ public class WelcomeView extends VerticalLayout implements View {
 
     Label welcomeMsg;
     Button logoutButton;
+    Button newNoteButton;
     MyUI myUI;
     Consumer logoutCallback;
 
@@ -28,6 +26,9 @@ public class WelcomeView extends VerticalLayout implements View {
         this.logoutCallback = logoutCallback;
         welcomeMsg = new Label("Welcome !");
         logoutButton = new Button("Log out", this::logout);
+        newNoteButton = new Button("Add note");
+        addComponents(welcomeMsg, logoutButton);
+        setSpacing(true);
 
 
     }
@@ -43,23 +44,38 @@ public class WelcomeView extends VerticalLayout implements View {
         welcomeMsg.setValue("Welcome " + user.getUsername() + "!");
         System.out.println("User id: " + user.getId());
 
-//        for(Note note : user.notes){
-//            System.out.println(note.getContent());
-//        }
 
-//        Note note = new Note(user);
-//        user.addNote(note);
-        RichTextArea sample = new RichTextArea();
-        sample.setValue("The quick brown fox jumps over the lazy dog.");
-        sample.setImmediate(true);
-//        sample.setSizeFull();
-        addComponent(sample);
+        for(Note note : user.getAllNotes()){
+            RichTextArea noteEditor = new RichTextArea();
+            noteEditor.setValue(note.getContent());
+            noteEditor.setImmediate(true);
+            noteEditor.addValueChangeListener(e -> {
+                note.setContent(noteEditor.getValue().toString());
+                note.save();
+                Notification.show("Note saved",
+                        String.valueOf(note.getId()),
+                        Notification.Type.HUMANIZED_MESSAGE);
+            });
+            addComponent(noteEditor);
+        }
 
-        sample.addValueChangeListener(e -> {
-            Note note = new Note(sample.getValue().toString(), user);
-//            note.setContent(sample.getValue().toString());
-            note.save();
+        newNoteButton.addClickListener( e -> {
+            Note newNote = new Note(user);
+            RichTextArea noteEditor = new RichTextArea();
+            noteEditor.addValueChangeListener( a -> {
+                newNote.setContent(noteEditor.getValue().toString());
+                newNote.save();
+                Notification.show("Note saved",
+                        String.valueOf(newNote.getId()),
+                        Notification.Type.ASSISTIVE_NOTIFICATION);
+            });
+            //add new noteEditor before new note button
+            addComponent(noteEditor,getComponentCount()-1);
+
         });
+
+        addComponent(newNoteButton);
+
 
 
     }

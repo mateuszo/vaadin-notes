@@ -39,6 +39,10 @@ public class Note {
         this.user = user;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Note(String content, MUser user) {
         this.content = content;
         this.user = user;
@@ -60,14 +64,11 @@ public class Note {
                 = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
 
-        entityManager.persist(this);
+        entityManager.merge(this);
 
         entityManager.getTransaction().commit();
         entityManager.close();
         entityManagerFactory.close();
-
-
-
 
     }
 
