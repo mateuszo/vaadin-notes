@@ -64,7 +64,9 @@ public class Note {
                 = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
 
-        entityManager.merge(this);
+        Note note = entityManager.merge(this);
+
+        this.id = note.id;
 
         entityManager.getTransaction().commit();
         entityManager.close();

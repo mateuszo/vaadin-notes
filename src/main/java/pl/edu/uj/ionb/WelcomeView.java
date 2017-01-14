@@ -67,7 +67,7 @@ public class WelcomeView extends VerticalLayout implements View {
                 newNote.save();
                 Notification.show("Note saved",
                         String.valueOf(newNote.getId()),
-                        Notification.Type.ASSISTIVE_NOTIFICATION);
+                        Notification.Type.HUMANIZED_MESSAGE);
             });
             //add new noteEditor before new note button
             addComponent(noteEditor,getComponentCount()-1);
