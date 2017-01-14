@@ -1,8 +1,13 @@
-vaadin-test
+vaadin-notes
 ==============
 
-Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
+Sample vaadin application allowing you to add rich text notes.
 
+Features:
+- Register user
+- Login user
+- Add multiple notes to a user
+- Save notes in real time
 
 Workflow
 ========
