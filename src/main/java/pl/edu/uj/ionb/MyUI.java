@@ -34,7 +34,7 @@ public class MyUI extends UI {
         layout.addComponent(contentArea);
         navigator = new Navigator(UI.getCurrent(), contentArea);
 
-        WelcomeView lv = new WelcomeView(this, user -> navigator.navigateTo("LoginComponent"));
+        WelcomeView lv = new WelcomeView(this);
         LoginComponent lc = new LoginComponent(this, user -> navigator.navigateTo("WelcomeView"));
         RegisterComponent rc = new RegisterComponent(this);
 

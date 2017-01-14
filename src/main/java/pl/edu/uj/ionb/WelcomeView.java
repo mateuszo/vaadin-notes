@@ -16,14 +16,12 @@ public class WelcomeView extends VerticalLayout implements View {
     Button logoutButton;
     Button newNoteButton;
     MyUI myUI;
-    Consumer logoutCallback;
 
 
-    public WelcomeView(MyUI myUI, Consumer logoutCallback) {
+    public WelcomeView(MyUI myUI) {
         setMargin(true);
         setSizeFull();
         this.myUI = myUI;
-        this.logoutCallback = logoutCallback;
         welcomeMsg = new Label("Welcome !");
         logoutButton = new Button("Log out", this::logout);
         newNoteButton = new Button("Add note");
@@ -35,7 +33,8 @@ public class WelcomeView extends VerticalLayout implements View {
 
     private void logout(Button.ClickEvent event){
         this.myUI.getSession().setAttribute("MUser", null);
-        this.logoutCallback.accept(null);
+        this.myUI.getSession().close();
+        this.myUI.getPage().setLocation("/");
     }
 
     @Override
